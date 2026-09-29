@@ -107,6 +107,13 @@ static const BindingDesc kBindings_anny_blend_backward[] = {
 	{ "dcoeffs", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
 };
 
+static const BindingDesc kBindings_anny_capsule_depth[] = {
+	{ "params", 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, true },
+	{ "points", 1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "capsules", 2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "depth", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+};
+
 static const KernelDesc kKernels[] = {
 	{ "anny_blend", "main", { 64, 1, 1 }, kBindings_anny_blend, 5, 0 },
 	{ "anny_csr_gemv3", "main", { 64, 1, 1 }, kBindings_anny_csr_gemv3, 6, 0 },
@@ -117,6 +124,7 @@ static const KernelDesc kKernels[] = {
 	{ "anny_lbs_backward_bind", "main", { 64, 1, 1 }, kBindings_anny_lbs_backward_bind, 5, 0 },
 	{ "anny_fk_backward", "main", { 1, 1, 1 }, kBindings_anny_fk_backward, 12, 0 },
 	{ "anny_blend_backward", "main", { 64, 1, 1 }, kBindings_anny_blend_backward, 4, 0 },
+	{ "anny_capsule_depth", "main", { 64, 1, 1 }, kBindings_anny_capsule_depth, 4, 0 },
 };
 
 static const uint32_t kNumKernels = sizeof(kKernels) / sizeof(kKernels[0]);

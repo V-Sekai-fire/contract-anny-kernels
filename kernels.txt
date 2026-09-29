@@ -12,3 +12,4 @@ anny_lbs_backward_bone both
 anny_lbs_backward_bind both
 anny_fk_backward both
 anny_blend_backward both
+anny_capsule_depth both
