@@ -114,6 +114,23 @@ static const BindingDesc kBindings_anny_capsule_depth[] = {
 	{ "depth", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
 };
 
+static const BindingDesc kBindings_anny_fk_local[] = {
+	{ "params", 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, true },
+	{ "parents", 1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "local", 2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "world", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+};
+
+static const BindingDesc kBindings_anny_ground[] = {
+	{ "params", 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, true },
+	{ "world", 1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "point_bone", 2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "point_off", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "kind", 4, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "state", 5, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+	{ "out", 6, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+};
+
 static const KernelDesc kKernels[] = {
 	{ "anny_blend", "main", { 64, 1, 1 }, kBindings_anny_blend, 5, 0 },
 	{ "anny_csr_gemv3", "main", { 64, 1, 1 }, kBindings_anny_csr_gemv3, 6, 0 },
@@ -125,6 +142,8 @@ static const KernelDesc kKernels[] = {
 	{ "anny_fk_backward", "main", { 1, 1, 1 }, kBindings_anny_fk_backward, 12, 0 },
 	{ "anny_blend_backward", "main", { 64, 1, 1 }, kBindings_anny_blend_backward, 4, 0 },
 	{ "anny_capsule_depth", "main", { 64, 1, 1 }, kBindings_anny_capsule_depth, 4, 0 },
+	{ "anny_fk_local", "main", { 1, 1, 1 }, kBindings_anny_fk_local, 4, 0 },
+	{ "anny_ground", "main", { 1, 1, 1 }, kBindings_anny_ground, 7, 0 },
 };
 
 static const uint32_t kNumKernels = sizeof(kKernels) / sizeof(kKernels[0]);

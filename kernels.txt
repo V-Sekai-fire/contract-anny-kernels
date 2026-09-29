@@ -13,3 +13,5 @@ anny_lbs_backward_bind both
 anny_fk_backward both
 anny_blend_backward both
 anny_capsule_depth both
+anny_fk_local both
+anny_ground both
