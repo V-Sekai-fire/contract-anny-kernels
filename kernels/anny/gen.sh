@@ -21,6 +21,7 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$HERE/../.." && pwd)"
+RUNTIME="${GUEST_RUNTIME_ROOT:-$(cd "$ROOT/../../2-contract/guest-runtime" && pwd)}"
 LEAN="${CLOTH_LEAN:-$ROOT/lean}"
 BUILD="${BUILD_DIR:-$ROOT/build}"
 SPV="$BUILD/spv-anny"
@@ -64,7 +65,7 @@ for k in $CPP; do
 done
 # A Linux slangc writes the prelude as an absolute #include; put the inline
 # form back so the committed emits do not depend on the host.
-python3 "$ROOT/tools/inline_prelude.py" "$ROOT"
+python3 "$RUNTIME/tools/inline_prelude.py" "$ROOT"
 # -fp-mode precise decorates every float op NoContraction: the driver may not
 # fuse a*b+c into an FMA, so the GPU rounds in the order the cpp path does
 # (the guest builds the cpp emits -ffp-contract=off); the drape kernels
@@ -76,7 +77,7 @@ for k in $SPIRV; do
 		-reflection-json "$SPV/$k.refl.json" -o "$SPV/$k.spv" "$HERE/slang/$k.slang"
 done
 echo "== binding table =="
-python3 "$HERE/../avbd/gen_avbd_kernel_table.py" --namespace anny_table --build-dir "$SPV" \
+python3 "$RUNTIME/kernels/avbd/gen_avbd_kernel_table.py" --namespace anny_table --build-dir "$SPV" \
 	--out "$HERE/AnnyKernelTable.inc" $SPIRV
 echo "== embedding SPIR-V =="
-python3 "$HERE/../embed_spv.py" --namespace anny_kernels "$SPV" "$BUILD/anny_kernels.inc"
+python3 "$RUNTIME/kernels/embed_spv.py" --namespace anny_kernels "$SPV" "$BUILD/anny_kernels.inc"
