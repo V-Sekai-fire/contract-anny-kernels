@@ -12,8 +12,6 @@ The Lean kernels restate ANNY's data-parallel stages, from blendshapes and the j
 kernels/anny/gen.sh
 ```
 
-The host test under `tests/` checks the emitted kernels against a double-precision restatement and its central differences, and runs a control that must fail.
-
 ## Licence
 
 There is no licence file. The `CITATION.cff` files name the licences of the body model and the Lean tree the kernels derive from.
