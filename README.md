@@ -2,4 +2,18 @@
 
 The ANNY body model's forward and backward kernels in Lean, emitted through Slang for the in-guest fits.
 
-Split out of `interactor-dress-on` at `310b52e` with its history (`git subtree`). It sits at `2-contract/anny-kernels` in the goal manifest (`contract-manifest-taskweft`), and finds the repositories it builds against as sibling checkouts at their manifest paths. `transport-meshing-pen` builds the guest ELFs (`build.sh`, `tools/build.exs`).
+## What it is for
+
+The Lean kernels restate ANNY's data-parallel stages, from blendshapes and the joint regressor to forward kinematics, skinning and the vertex residual, each with its vector-Jacobian product, so the in-guest L-BFGS-B can fit a body to a target mesh. They are emitted as Slang and compiled to C++ for the CPU path and SPIR-V for the GPU path. The repository finds the ones it builds against as sibling checkouts at their paths in the goal manifest.
+
+## Build
+
+```sh
+kernels/anny/gen.sh
+```
+
+The host test under `tests/` checks the emitted kernels against a double-precision restatement and its central differences, and runs a control that must fail.
+
+## Licence
+
+There is no licence file. The `CITATION.cff` files name the licences of the body model and the Lean tree the kernels derive from.
