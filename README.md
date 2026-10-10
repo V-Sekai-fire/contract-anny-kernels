@@ -14,4 +14,4 @@ kernels/anny/gen.sh
 
 ## Licence
 
-There is no licence file. The `CITATION.cff` files name the licences of the body model and the Lean tree the kernels derive from.
+MIT. See [LICENSE](LICENSE). The `CITATION.cff` files name the licences of the body model and the Lean tree the kernels derive from.
