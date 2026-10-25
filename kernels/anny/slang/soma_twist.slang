@@ -153,7 +153,7 @@ void main(uint3 tid : SV_DispatchThreadID) {
   float ss_T7 = (((ss_R02 * R1) + (ss_R05 * R4)) + (ss_R08 * R7));
   float ss_T8 = (((ss_R02 * R2) + (ss_R05 * R5)) + (ss_R08 * R8));
   float ss = atan2(((ax == 0u) ? (ss_T7 - ss_T5) : ((ax == 1u) ? (ss_T2 - ss_T6) : (ss_T3 - ss_T1))), ((ax == 0u) ? (ss_T4 + ss_T8) : ((ax == 1u) ? (ss_T8 + ss_T0) : (ss_T0 + ss_T4))));
-  chan[(params.NJ + j)] = (((params.twistForm == 0u) ? sw : ss) * sg);
+  chan[(params.NJ + j)] = (((params.twistForm == 0u) ? ss : sw) * sg);
   float al = 0.000000;
   for (uint s = 0u; s < params.NS; ++s) {
     if ((segEnd[s] == j)) {
@@ -353,7 +353,7 @@ void main(uint3 tid : SV_DispatchThreadID) {
       float st_T7 = (((st_R02 * Rel1) + (st_R05 * Rel4)) + (st_R08 * Rel7));
       float st_T8 = (((st_R02 * Rel2) + (st_R05 * Rel5)) + (st_R08 * Rel8));
       float st = atan2(((0u == 0u) ? (st_T7 - st_T5) : ((0u == 1u) ? (st_T2 - st_T6) : (st_T3 - st_T1))), ((0u == 0u) ? (st_T4 + st_T8) : ((0u == 1u) ? (st_T8 + st_T0) : (st_T0 + st_T4))));
-      al = ((params.twistForm == 0u) ? tw : st);
+      al = ((params.twistForm == 0u) ? st : tw);
     }
   }
   for (uint s = 0u; s < params.NS; ++s) {
@@ -554,7 +554,7 @@ void main(uint3 tid : SV_DispatchThreadID) {
       float st_T7 = (((st_R02 * Rel1) + (st_R05 * Rel4)) + (st_R08 * Rel7));
       float st_T8 = (((st_R02 * Rel2) + (st_R05 * Rel5)) + (st_R08 * Rel8));
       float st = atan2(((0u == 0u) ? (st_T7 - st_T5) : ((0u == 1u) ? (st_T2 - st_T6) : (st_T3 - st_T1))), ((0u == 0u) ? (st_T4 + st_T8) : ((0u == 1u) ? (st_T8 + st_T0) : (st_T0 + st_T4))));
-      al = ((params.twistForm == 0u) ? tw : st);
+      al = ((params.twistForm == 0u) ? st : tw);
     }
   }
   chan[((2u * params.NJ) + j)] = al;

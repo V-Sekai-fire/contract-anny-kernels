@@ -87,7 +87,7 @@ def axisUnit (ax : E) (i : Nat) : E := sel (eq ax (u i)) (fl 1.0) (fl 0.0)
 
     This is the standard twist, `2·atan2(q_ax, w)`. SOMA-X's half-angle form (`twistAngle`) is twice
     the standard twist of `√r`; the two differ once `r` has swing, so the kernels select it with
-    `twistForm` and the parity test measures the gap. -/
+    `twistForm`; the Kabsch split is the default. -/
 def swingTwistAngle (out r : String) (ax : E) : List St :=
   let n := fun x => out ++ x
   let normed := fun (dst src : String) =>

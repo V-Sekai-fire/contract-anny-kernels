@@ -193,8 +193,10 @@ func _run() -> int:
 		var frames := _bytes(cd + "frames.bin").to_int32_array()
 		var od: String = out + "/" + clip
 		DirAccess.make_dir_recursive_absolute(od)
-		var variants := {"verts": [0, false, false, 0], "off": [0, false, true, 0], "tw": [0, true, false, 0],
-			"shift": [0, false, false, 1], "kabsch": [1, false, false, 0]}
+		# Form 1 (SOMA-X's half-angle twist) for the parity runs, form 0 (the Kabsch split, the
+		# default) for the comparison and the timing.
+		var variants := {"verts": [1, false, false, 0], "off": [1, false, true, 0], "tw": [1, true, false, 0],
+			"shift": [1, false, false, 1], "kabsch": [0, false, false, 0]}
 		for name in variants:
 			var vv: Array = variants[name]
 			var f := FileAccess.open(od + "/" + name + ".bin", FileAccess.WRITE)

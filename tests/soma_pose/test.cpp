@@ -148,7 +148,7 @@ struct Frame {
 };
 
 static void poseFrame(const Rig &r, const float *pose, const float *transl, const float *twistM, const float *w2val,
-		Frame &f, uint32_t twistForm = 0) {
+		Frame &f, uint32_t twistForm = 1) {
 	soma_orient_run(r.NJ, r.gtj, pose, transl, r.orient.data(), r.orientPT.data(), r.pubLocalT.data(),
 			r.pubParent.data(), r.corrBind.data(), f.rabs.data(), f.accA.data(), f.ancA.data(), f.feat.data());
 	f.pubWorld = jump(r.NJ, r.roundsPub, f.accA, f.ancA, f.accB, f.ancB);
@@ -206,7 +206,7 @@ static int gpuMain(const std::string &dir, const std::string &gdir) {
 		verdict("gpu correctives off", clip, cOff, bound, false, "mm", 1000);
 		verdict("gpu twist joints skipped", clip, cTw, bound, false, "mm", 1000);
 		verdict("gpu one frame late", clip, cShift, bound, false, "mm", 1000);
-		printf("INFO %-14s gpu, Kabsch swing-twist split (twistForm 1): max %.4g mean %.4g mm from SOMA-X\n", clip,
+		printf("INFO %-14s gpu, Kabsch swing-twist split (twistForm 0, the default): max %.4g mean %.4g mm from SOMA-X\n", clip,
 				cKabsch.mx * 1000, cKabsch.mean() * 1000);
 	}
 	printf("%s\n", failures ? "FAILED" : "ALL OK");
@@ -255,7 +255,7 @@ int main(int argc, char **argv) {
 			vs(cTw);
 			poseFrame(r, &pose[(fr + 1) * 9 * r.NJ], &transl[(fr + 1) * 3], r.twistM.data(), r.w2val.data(), f);
 			vs(cShift);
-			poseFrame(r, &pose[fr * 9 * r.NJ], &transl[fr * 3], r.twistM.data(), r.w2val.data(), f, 1);
+			poseFrame(r, &pose[fr * 9 * r.NJ], &transl[fr * 3], r.twistM.data(), r.w2val.data(), f, 0);
 			vs(cKabsch);
 		}
 		printf("INFO %-14s cpu %.2f ms/frame (single thread, C++ emission); target world max relative |d| %.3g\n",
@@ -264,7 +264,7 @@ int main(int argc, char **argv) {
 		verdict("correctives off", clip, cOff, VERT_BOUND_M, false, "mm", 1000);
 		verdict("twist joints skipped", clip, cTw, VERT_BOUND_M, false, "mm", 1000);
 		verdict("one frame late", clip, cShift, VERT_BOUND_M, false, "mm", 1000);
-		printf("INFO %-14s twist by the Kabsch swing-twist split (twistForm 1) instead of SOMA-X's half-angle form: "
+		printf("INFO %-14s twist by the Kabsch swing-twist split (twistForm 0, the default) instead of SOMA-X's half-angle form: "
 				"max %.4g mean %.4g mm from SOMA-X\n", clip, cKabsch.mx * 1000, cKabsch.mean() * 1000);
 	}
 	printf("%s\n", failures ? "FAILED" : "ALL OK");

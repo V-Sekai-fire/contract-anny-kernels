@@ -5194,7 +5194,7 @@ void _main_0(void* _S1, void* entryPointParams_0, void* globalParams_1)
     {
 
 #line 156
-        ss_v00_0 = sw_0;
+        ss_v00_0 = ss_0;
 
 #line 156
     }
@@ -5202,7 +5202,7 @@ void _main_0(void* _S1, void* entryPointParams_0, void* globalParams_1)
     {
 
 #line 156
-        ss_v00_0 = ss_0;
+        ss_v00_0 = sw_0;
 
 #line 156
     }
@@ -5845,7 +5845,7 @@ void _main_0(void* _S1, void* entryPointParams_0, void* globalParams_1)
             {
 
 #line 356
-                ss_v00_0 = tw_0;
+                ss_v00_0 = st_0;
 
 #line 356
             }
@@ -5853,7 +5853,7 @@ void _main_0(void* _S1, void* entryPointParams_0, void* globalParams_1)
             {
 
 #line 356
-                ss_v00_0 = st_0;
+                ss_v00_0 = tw_0;
 
 #line 356
             }
@@ -6521,7 +6521,7 @@ void _main_0(void* _S1, void* entryPointParams_0, void* globalParams_1)
             {
 
 #line 557
-                ss_v00_0 = tw_1;
+                ss_v00_0 = st_1;
 
 #line 557
             }
@@ -6529,7 +6529,7 @@ void _main_0(void* _S1, void* entryPointParams_0, void* globalParams_1)
             {
 
 #line 557
-                ss_v00_0 = st_1;
+                ss_v00_0 = tw_1;
 
 #line 557
             }

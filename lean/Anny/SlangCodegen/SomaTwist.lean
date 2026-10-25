@@ -24,11 +24,13 @@ reverse segment's start joint gets the X twist of `V_parentᵀ · V_start`,
 written after every end value as SOMA-X assigns them. No sign is applied,
 as in SOMA-X.
 
-`twistForm` picks the swing-twist angle: 0 is SOMA-X's own half-angle form
-(`SomaCommon.twistAngle`, what the parity gate checks); 1 is the plain
+`twistForm` picks the swing-twist angle. 0, the default, is the plain
 swing-twist split from the IK solver's rank-1 Kabsch completion
-(`SomaCommon.swingTwistAngle`, after swing-twist-kusudama `KusKabsch.lean`),
-kept so the gap between the two can be measured on the mesh.
+(`SomaCommon.swingTwistAngle`, after swing-twist-kusudama `KusKabsch.lean`):
+it returns the twist exactly at any swing. 1 is SOMA-X's half-angle form
+(`SomaCommon.twistAngle`), which drifts from the twist as swing grows (3.8
+degrees at 30 degrees of swing, 37 at 90); it is kept only so the parity
+gate can check every other step against SOMA-X.
 
 Bindings (set 0):
 
@@ -67,7 +69,7 @@ def relTwist (ka kb : E) : List St :=
   matTMul "Rel" "Va" "Vb" ++
   twistAngle "tw" "Rel" (u 0) ++
   swingTwistAngle "st" "Rel" (u 0) ++
-  [ setv "al" (sel (eq (p "twistForm") (u 0)) (v "tw") (v "st")) ]
+  [ setv "al" (sel (eq (p "twistForm") (u 0)) (v "st") (v "tw")) ]
 
 def shader : SlangShaderModule :=
   { structs := [ { name := "SomaTwistParams", fields := [fld "NJ" uT, fld "NS" uT, fld "twistForm" uT] } ]
@@ -85,7 +87,7 @@ def shader : SlangShaderModule :=
            [ setAt "chan" (v "j") (eulerChannel "R" (v "ax") * v "sg") ] ++
            twistAngle "sw" "R" (v "ax") ++
            swingTwistAngle "ss" "R" (v "ax") ++
-           [ setAt "chan" (p "NJ" + v "j") (sel (eq (p "twistForm") (u 0)) (v "sw") (v "ss") * v "sg")
+           [ setAt "chan" (p "NJ" + v "j") (sel (eq (p "twistForm") (u 0)) (v "ss") (v "sw") * v "sg")
            , let_ fT "al" (fl 0.0)
            , for_ "s" (u 0) (p "NS")
                [ if_ (eq (at_ "segEnd" (v "s")) (v "j"))
@@ -252,7 +254,7 @@ void main(uint3 tid : SV_DispatchThreadID) {
   float ss_T7 = (((ss_R02 * R1) + (ss_R05 * R4)) + (ss_R08 * R7));
   float ss_T8 = (((ss_R02 * R2) + (ss_R05 * R5)) + (ss_R08 * R8));
   float ss = atan2(((ax == 0u) ? (ss_T7 - ss_T5) : ((ax == 1u) ? (ss_T2 - ss_T6) : (ss_T3 - ss_T1))), ((ax == 0u) ? (ss_T4 + ss_T8) : ((ax == 1u) ? (ss_T8 + ss_T0) : (ss_T0 + ss_T4))));
-  chan[(params.NJ + j)] = (((params.twistForm == 0u) ? sw : ss) * sg);
+  chan[(params.NJ + j)] = (((params.twistForm == 0u) ? ss : sw) * sg);
   float al = 0.000000;
   for (uint s = 0u; s < params.NS; ++s) {
     if ((segEnd[s] == j)) {
@@ -452,7 +454,7 @@ void main(uint3 tid : SV_DispatchThreadID) {
       float st_T7 = (((st_R02 * Rel1) + (st_R05 * Rel4)) + (st_R08 * Rel7));
       float st_T8 = (((st_R02 * Rel2) + (st_R05 * Rel5)) + (st_R08 * Rel8));
       float st = atan2(((0u == 0u) ? (st_T7 - st_T5) : ((0u == 1u) ? (st_T2 - st_T6) : (st_T3 - st_T1))), ((0u == 0u) ? (st_T4 + st_T8) : ((0u == 1u) ? (st_T8 + st_T0) : (st_T0 + st_T4))));
-      al = ((params.twistForm == 0u) ? tw : st);
+      al = ((params.twistForm == 0u) ? st : tw);
     }
   }
   for (uint s = 0u; s < params.NS; ++s) {
@@ -653,7 +655,7 @@ void main(uint3 tid : SV_DispatchThreadID) {
       float st_T7 = (((st_R02 * Rel1) + (st_R05 * Rel4)) + (st_R08 * Rel7));
       float st_T8 = (((st_R02 * Rel2) + (st_R05 * Rel5)) + (st_R08 * Rel8));
       float st = atan2(((0u == 0u) ? (st_T7 - st_T5) : ((0u == 1u) ? (st_T2 - st_T6) : (st_T3 - st_T1))), ((0u == 0u) ? (st_T4 + st_T8) : ((0u == 1u) ? (st_T8 + st_T0) : (st_T0 + st_T4))));
-      al = ((params.twistForm == 0u) ? tw : st);
+      al = ((params.twistForm == 0u) ? st : tw);
     }
   }
   chan[((2u * params.NJ) + j)] = al;
