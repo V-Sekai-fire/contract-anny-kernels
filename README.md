@@ -31,8 +31,10 @@ from the frame's joint rotations and hips translation to the skinned vertices:
 No kernel forms a quaternion. SOMA-X's swing-twist angle, `4·atan2(q_a, 1 + w)` on the half-angle
 quaternion, is read off the matrix as `4·atan2(num_a, (1 + tr) + 2√(1 + tr))`. It is not the plain
 swing-twist angle `2·atan2(q_a, w)`: on the test clips the two differ by up to 0.11 rad. The plain
-split, built from the IK solver's rank-1 Kabsch completion (swing-twist-kusudama `KusKabsch.lean`),
-is kept behind `twistForm = 1` so the gap can be measured on the mesh.
+split, the rank-1 Kabsch completion of the rotational-star solver
+(contract-rotation-star `RotationStar.Slang.Split.swingTwistAngle`), is the default
+(`twistForm = 0`); SOMA-X's form is kept behind `twistForm = 1` so the gap can be measured on
+the mesh.
 
 Setup runs once on the CPU: `tools/soma/export_soma.py` builds SOMA-X's layer and writes every
 table the kernels read, plus SOMA-X's own vertices for the test clips. Then:

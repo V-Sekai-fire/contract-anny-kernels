@@ -10,6 +10,10 @@ require LeanSlang from git
 -- A sibling checkout in the manifest layout (contract-manifest-taskweft).
 require Drape from "../../lbfgsb/lean"
 
+-- The rotational-star solver; the SOMA-X twist kernel takes its swing-twist split from here.
+require RotationStar from git
+  "https://github.com/V-Sekai-fire/contract-rotation-star.git" @ "b70e19a627b3e6de19c4b52359406f771fae51c0" / "lean"
+
 -- The ANNY body model's forward and backward kernels (blendshapes, joint
 -- regressor, 6D forward kinematics, skinning, vertex residual), for the
 -- in-guest L-BFGS-B fit. A default target, so a bare `lake build` checks
