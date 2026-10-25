@@ -26,6 +26,13 @@ private def kernels : List (String × SlangShaderModule) :=
   , ("anny_capsule_depth",     Anny.SlangCodegen.CapsuleDepth.shader)
   , ("anny_fk_local",          Anny.SlangCodegen.FkLocal.shader)
   , ("anny_ground",            Anny.SlangCodegen.Ground.shader)
+  , ("soma_orient",           Anny.SlangCodegen.SomaOrient.shader)
+  , ("soma_jump",             Anny.SlangCodegen.SomaJump.shader)
+  , ("soma_twist",            Anny.SlangCodegen.SomaTwist.shader)
+  , ("soma_expand",           Anny.SlangCodegen.SomaExpand.shader)
+  , ("soma_skin",             Anny.SlangCodegen.SomaSkin.shader)
+  , ("soma_corr_l1",          Anny.SlangCodegen.SomaCorrL1.shader)
+  , ("soma_corr_l2",          Anny.SlangCodegen.SomaCorrL2.shader)
   ]
 
 def main (args : List String) : IO UInt32 := do

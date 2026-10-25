@@ -15,3 +15,12 @@ anny_blend_backward both
 anny_capsule_depth both
 anny_fk_local both
 anny_ground both
+# SOMA-X per-frame posing (ANNY identity, correctives), in dispatch order;
+# soma_jump runs once per pointer-jumping round, anny_lbs skins last:
+soma_orient both
+soma_jump both
+soma_twist both
+soma_expand both
+soma_skin both
+soma_corr_l1 both
+soma_corr_l2 both

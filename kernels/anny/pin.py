@@ -35,6 +35,13 @@ MODULES = {
     "LbsBackwardBone": "anny_lbs_backward_bone",
     "LbsBackwardBind": "anny_lbs_backward_bind",
     "VertResidual": "anny_vert_residual",
+    "SomaOrient": "soma_orient",
+    "SomaJump": "soma_jump",
+    "SomaTwist": "soma_twist",
+    "SomaExpand": "soma_expand",
+    "SomaSkin": "soma_skin",
+    "SomaCorrL1": "soma_corr_l1",
+    "SomaCorrL2": "soma_corr_l2",
 }
 
 BLOCK = re.compile(r"-- BEGIN PIN\n.*?-- END PIN\n", re.S)

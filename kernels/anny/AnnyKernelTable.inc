@@ -131,6 +131,84 @@ static const BindingDesc kBindings_anny_ground[] = {
 	{ "out", 6, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
 };
 
+static const BindingDesc kBindings_soma_orient[] = {
+	{ "params", 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, true },
+	{ "pose", 1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "transl", 2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "orient", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "orientPT", 4, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "localT", 5, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "parents", 6, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "corrBind", 7, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "rabs", 8, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+	{ "acc", 9, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+	{ "anc", 10, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+	{ "feat", 11, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+};
+
+static const BindingDesc kBindings_soma_jump[] = {
+	{ "params", 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, true },
+	{ "accIn", 1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "ancIn", 2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "accOut", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+	{ "ancOut", 4, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+};
+
+static const BindingDesc kBindings_soma_twist[] = {
+	{ "params", 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, true },
+	{ "rabs", 1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "world", 2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "srcAxis", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "srcSign", 4, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "segStart", 5, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "segEnd", 6, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "segParent", 7, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "segRev", 8, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "bindRot", 9, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "alignRot", 10, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "chan", 11, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+};
+
+static const BindingDesc kBindings_soma_expand[] = {
+	{ "params", 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, true },
+	{ "kind", 1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "refIdx", 2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "par", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "baseRot", 4, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "localT", 5, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "twistM", 6, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "chan", 7, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "twAxis", 8, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "twSign", 9, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "publicWorld", 10, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "acc", 11, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+	{ "anc", 12, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+};
+
+static const BindingDesc kBindings_soma_skin[] = {
+	{ "params", 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, true },
+	{ "world", 1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "invBind", 2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "bone", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+};
+
+static const BindingDesc kBindings_soma_corr_l1[] = {
+	{ "params", 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, true },
+	{ "feat", 1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "w1", 2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "z", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+};
+
+static const BindingDesc kBindings_soma_corr_l2[] = {
+	{ "params", 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, true },
+	{ "rest", 1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "rowPtr", 2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "col", 3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "val", 4, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "z", 5, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, true },
+	{ "bind", 6, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, false },
+};
+
 static const KernelDesc kKernels[] = {
 	{ "anny_blend", "main", { 64, 1, 1 }, kBindings_anny_blend, 5, 0 },
 	{ "anny_csr_gemv3", "main", { 64, 1, 1 }, kBindings_anny_csr_gemv3, 6, 0 },
@@ -144,6 +222,13 @@ static const KernelDesc kKernels[] = {
 	{ "anny_capsule_depth", "main", { 64, 1, 1 }, kBindings_anny_capsule_depth, 4, 0 },
 	{ "anny_fk_local", "main", { 1, 1, 1 }, kBindings_anny_fk_local, 4, 0 },
 	{ "anny_ground", "main", { 1, 1, 1 }, kBindings_anny_ground, 7, 0 },
+	{ "soma_orient", "main", { 64, 1, 1 }, kBindings_soma_orient, 12, 0 },
+	{ "soma_jump", "main", { 64, 1, 1 }, kBindings_soma_jump, 5, 0 },
+	{ "soma_twist", "main", { 64, 1, 1 }, kBindings_soma_twist, 12, 0 },
+	{ "soma_expand", "main", { 64, 1, 1 }, kBindings_soma_expand, 13, 0 },
+	{ "soma_skin", "main", { 64, 1, 1 }, kBindings_soma_skin, 4, 0 },
+	{ "soma_corr_l1", "main", { 64, 1, 1 }, kBindings_soma_corr_l1, 4, 0 },
+	{ "soma_corr_l2", "main", { 64, 1, 1 }, kBindings_soma_corr_l2, 7, 0 },
 };
 
 static const uint32_t kNumKernels = sizeof(kKernels) / sizeof(kKernels[0]);
